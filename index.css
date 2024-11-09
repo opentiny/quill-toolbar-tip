@@ -1,4 +1,4 @@
-.tooltip {
+.toolbar-tip__tooltip {
   position: absolute;
   z-index: 20;
   padding: 4px 12px;
@@ -9,9 +9,9 @@
   background-color: #303133;
   transition: opacity 0.15s linear;
 }
-.tooltip.transparent {
+.toolbar-tip__tooltip.transparent {
   opacity: 0;
 }
-.tooltip.hidden {
+.toolbar-tip__tooltip.hidden {
   display: none;
 }
