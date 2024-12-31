@@ -1,6 +1,7 @@
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
+import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 import autoprefixer from 'autoprefixer';
 import { dest, parallel, series, src, task, watch } from 'gulp';
@@ -9,7 +10,6 @@ import postcss from 'gulp-postcss';
 import gulpSass from 'gulp-sass';
 import { rollup } from 'rollup';
 import { dts } from 'rollup-plugin-dts';
-import { terser } from 'rollup-plugin-terser';
 import sass from 'sass';
 
 const sassPlugin = gulpSass(sass);
