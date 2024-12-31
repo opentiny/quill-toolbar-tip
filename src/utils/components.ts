@@ -44,13 +44,8 @@ export const createTooltip = (target: HTMLElement, options: Partial<TooltipOptio
     className = ensureArray(className.split(' '));
   }
   if (msg || content || onShow) {
-    if (!tooltipContainer) {
-      tooltipContainer = document.createElement('div');
-      document.body.appendChild(tooltipContainer);
-    }
     const tooltip = document.createElement('div');
     tooltip.classList.add('toolbar-tip__tooltip', 'hidden', 'transparent', ...className);
-    tooltipContainer.appendChild(tooltip);
 
     const setTooltipContent = () => {
       if (content) {
@@ -89,9 +84,7 @@ export const createTooltip = (target: HTMLElement, options: Partial<TooltipOptio
     };
     const transitionendHandler = () => {
       tooltip.classList.add('hidden');
-      if (tooltipContainer.contains(tooltip)) {
-        tooltipContainer.removeChild(tooltip);
-      }
+      tooltip.remove();
       if (cleanup) cleanup();
     };
     function show() {
@@ -101,6 +94,10 @@ export const createTooltip = (target: HTMLElement, options: Partial<TooltipOptio
         const setContentResult = setTooltipContent();
         if (!setContentResult) return;
 
+        if (!tooltipContainer) {
+          tooltipContainer = document.createElement('div');
+          document.body.appendChild(tooltipContainer);
+        }
         tooltipContainer.appendChild(tooltip);
         tooltip.removeEventListener('transitionend', transitionendHandler);
         tooltip.classList.remove('hidden');
@@ -132,9 +129,11 @@ export const createTooltip = (target: HTMLElement, options: Partial<TooltipOptio
       }
       if (cleanup) cleanup();
       tooltip.remove();
+      if (tooltipContainer.children.length <= 0) {
+        tooltipContainer.remove();
+      }
     };
 
-    hide();
     return {
       instance: tooltip,
       destroy,
