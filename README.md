@@ -117,14 +117,15 @@ const QuillToolbarTipOption = {
 
 ### Types and default value
 
-| Option    | Description                                                                                |
-| --------- | ------------------------------------------------------------------------------------------ |
-| direction | The direction of the tooltip display                                                       |
-| delay     | The delay before the tooltip is displayed and hidden in milliseconds.                      |
-| msg       | The message of the tooltip                                                                 |
-| content   | The content of the tooltip                                                                 |
-| className | The class name of the tooltip                                                              |
-| onShow    | Callback when tooltip show. If `onShow` return `undefined`, the tooltip will not be shown. |
+| Option       | Description                                                                                |
+| ------------ | ------------------------------------------------------------------------------------------ |
+| direction    | The direction of the tooltip display                                                       |
+| delay        | The delay before the tooltip is displayed and hidden in milliseconds.                      |
+| msg          | The message of the tooltip                                                                 |
+| content      | The content of the tooltip                                                                 |
+| className    | The class name of the tooltip                                                              |
+| tipHoverable | Display tooltip when tooltip is hovered. Default is `true`.                                |
+| onShow       | Callback when tooltip show. If `onShow` return `undefined`, the tooltip will not be shown. |
 
 ```ts
 interface TooltipOptions {
