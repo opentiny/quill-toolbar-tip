@@ -22,6 +22,7 @@ export interface TooltipOptions {
   delay: number;
   content: HTMLElement;
   className: string | string[];
+  tipHoverable: boolean;
   onShow: (target: HTMLElement) => string | HTMLElement | undefined | null;
 }
 export interface TooltipInstance {
@@ -38,6 +39,7 @@ export const createTooltip = (target: HTMLElement, options: Partial<TooltipOptio
     content,
     direction = 'top',
     className = [],
+    tipHoverable = true,
     onShow,
   } = Object.assign({}, tooltipDefaultOptions, options);
   if (isString(className)) {
@@ -116,7 +118,10 @@ export const createTooltip = (target: HTMLElement, options: Partial<TooltipOptio
       }, delay);
     }
 
-    const eventListeners = [target, tooltip];
+    const eventListeners = [target];
+    if (tipHoverable) {
+      eventListeners.push(tooltip);
+    }
     for (const listener of eventListeners) {
       listener.addEventListener('mouseenter', show);
       listener.addEventListener('mouseleave', hide);
