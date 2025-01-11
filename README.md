@@ -115,7 +115,7 @@ const QuillToolbarTipOption = {
 | defaultTooltipOptions | `Partial<TooltipOptions>`                        | Default tooltip options.                                                                                                         |
 | tipTextMap            | `Record<string, Partial<TooltipItem> \| string>` | Tooltip text map. You can also set a object that will be use in the tooltip. The configuration of tooltip options is shown below |
 
-### Types and default value
+### TooltipOptions
 
 | Option       | Description                                                                                |
 | ------------ | ------------------------------------------------------------------------------------------ |
