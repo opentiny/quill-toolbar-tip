@@ -24,6 +24,7 @@ export interface TooltipOptions {
   className: string | string[];
   tipHoverable: boolean;
   onShow: (target: HTMLElement) => string | HTMLElement | undefined | null;
+  appendTo: HTMLElement;
 }
 export interface TooltipInstance {
   instance: HTMLElement;
@@ -41,6 +42,7 @@ export const createTooltip = (target: HTMLElement, options: Partial<TooltipOptio
     className = [],
     tipHoverable = true,
     onShow,
+    appendTo = document.body,
   } = Object.assign({}, tooltipDefaultOptions, options);
   if (isString(className)) {
     className = ensureArray(className.split(' '));
@@ -98,7 +100,7 @@ export const createTooltip = (target: HTMLElement, options: Partial<TooltipOptio
 
         if (!tooltipContainer) {
           tooltipContainer = document.createElement('div');
-          document.body.appendChild(tooltipContainer);
+          appendTo.appendChild(tooltipContainer);
         }
         tooltipContainer.appendChild(tooltip);
         tooltip.removeEventListener('transitionend', transitionendHandler);
