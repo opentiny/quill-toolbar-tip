@@ -74,6 +74,7 @@ export class QuillToolbarTip {
           }
           return currentControlResult || result;
         },
+        appendTo: this.quill.container,
       });
       if (instance) {
         this.toolbarTips.push([toolName, instance]);
