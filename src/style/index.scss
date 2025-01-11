@@ -10,6 +10,7 @@ $namspace: toolbar-tip;
   white-space: nowrap;
   background-color: #303133;
   transition: opacity 0.15s linear;
+  text-align: center;
   &.transparent {
     opacity: 0;
   }

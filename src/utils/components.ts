@@ -51,17 +51,25 @@ export const createTooltip = (target: HTMLElement, options: Partial<TooltipOptio
     const tooltip = document.createElement('div');
     tooltip.classList.add('toolbar-tip__tooltip', 'hidden', 'transparent', ...className);
 
+    const appendLine = (msg: string) => {
+      tooltip.innerHTML = '';
+      for (const text of msg.split('\n')) {
+        const line = document.createElement('div');
+        line.textContent = text;
+        tooltip.appendChild(line);
+      }
+    };
     const setTooltipContent = () => {
       if (content) {
         tooltip.appendChild(content);
       }
       if (msg) {
-        tooltip.textContent = msg;
+        appendLine(msg);
       }
       if (onShow) {
         const result = onShow(target);
         if (isString(result)) {
-          tooltip.textContent = result;
+          appendLine(result);
         }
         else if (result) {
           tooltip.appendChild(result);
