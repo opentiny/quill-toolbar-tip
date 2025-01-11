@@ -21,6 +21,7 @@ const toolbar = [
 const ToolbarTipOptions = {
   defaultTooltipOptions: {
     direction: 'top',
+    tipHoverable: false,
   },
   tipTextMap: window.QuillToolbarTip.defaultToolbarTip['en-US'],
 };
