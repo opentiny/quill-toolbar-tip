@@ -3,5 +3,7 @@ node_modules
 
 .eslintcache
 
-docs/dev.*
-docs/*.css
+/docs/**/*
+
+!/docs/index.js
+!/docs/index.html
