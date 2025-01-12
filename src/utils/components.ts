@@ -32,7 +32,7 @@ export interface TooltipInstance {
   hide: () => void;
   show: () => void;
 }
-let tooltipContainer: HTMLElement;
+let tooltipContainer: HTMLElement | undefined;
 export const createTooltip = (target: HTMLElement, options: Partial<TooltipOptions> = {}): TooltipInstance | null => {
   let {
     msg = '',
@@ -144,7 +144,7 @@ export const createTooltip = (target: HTMLElement, options: Partial<TooltipOptio
       }
       if (cleanup) cleanup();
       tooltip.remove();
-      if (tooltipContainer.children.length <= 0) {
+      if (tooltipContainer && tooltipContainer.children.length <= 0) {
         tooltipContainer.remove();
       }
     };
