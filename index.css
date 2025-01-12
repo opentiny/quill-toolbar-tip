@@ -8,6 +8,7 @@
   white-space: nowrap;
   background-color: #303133;
   transition: opacity 0.15s linear;
+  text-align: center;
 }
 .toolbar-tip__tooltip.transparent {
   opacity: 0;
