@@ -60,7 +60,6 @@ export class QuillToolbarTip {
       }
       const targetLabel = this.getControlLabel(toolControlItem);
       if (!targetLabel || (isUndefined(currentControlOption) && isUndefined(parentOptions))) continue;
-      console.log(targetLabel);
       const instance = createTooltip(targetLabel, {
         ...this.options.defaultTooltipOptions,
         ...currentControlOption,
@@ -84,7 +83,7 @@ export class QuillToolbarTip {
   }
 
   getControlLabel([_, target]: [ string, HTMLButtonElement | HTMLSelectElement]) {
-    return target.tagName.toLowerCase() === 'button' ? target : target.previousElementSibling!.querySelector('.ql-picker-label') as HTMLElement | null;
+    return target.tagName.toLowerCase() === 'button' ? target : target.previousElementSibling as HTMLElement | null;
   }
 
   destroyAllTips() {
