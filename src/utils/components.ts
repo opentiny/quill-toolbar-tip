@@ -146,6 +146,7 @@ export const createTooltip = (target: HTMLElement, options: Partial<TooltipOptio
       tooltip.remove();
       if (tooltipContainer && tooltipContainer.children.length <= 0) {
         tooltipContainer.remove();
+        tooltipContainer = undefined;
       }
     };
 
