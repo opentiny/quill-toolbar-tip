@@ -5,7 +5,7 @@ import { tooltipDefaultOptions } from './constants';
 import { createTooltip, isString, isUndefined } from './utils';
 
 export interface TooltipItem extends Omit<TooltipOptions, 'onShow'> {
-  onShow: (target: HTMLElement, value: string) => ReturnType<TooltipOptions['onShow']>;
+  onShow: (this: Quill, target: HTMLElement, value: string) => ReturnType<TooltipOptions['onShow']>;
 }
 
 export interface QuillToolbarTipOptions {
@@ -63,14 +63,14 @@ export class QuillToolbarTip {
       const instance = createTooltip(targetLabel, {
         ...this.options.defaultTooltipOptions,
         ...currentControlOption,
-        onShow(target: HTMLElement) {
+        onShow: (target: HTMLElement) => {
           let result: ReturnType<TooltipItem['onShow']> = toolControl.value;
           if (parentOptions && !isString(parentOptions) && parentOptions.onShow) {
-            result = parentOptions.onShow(target, toolControl.value);
+            result = parentOptions.onShow.call(this.quill, target, toolControl.value);
           }
           let currentControlResult: ReturnType<TooltipItem['onShow']> = null;
           if (currentControlOption) {
-            currentControlResult = currentControlOption.onShow ? currentControlOption.onShow(target, toolControl.value) : currentControlOption.content || currentControlOption.msg;
+            currentControlResult = currentControlOption.onShow ? currentControlOption.onShow.call(this.quill, target, toolControl.value) : currentControlOption.content || currentControlOption.msg;
           }
           return currentControlResult || result;
         },
