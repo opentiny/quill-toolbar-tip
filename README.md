@@ -38,7 +38,7 @@ const quill = new Quill('#editor', {
 });
 ```
 
-Or you can add the text in `tipTextMap` to display in the tooltip. The keys matchs the toolbar format name.
+Or you can add the text in `tipTextMap` to display in the tooltip. The keys match the toolbar format name.
 
 ```ts
 import QuillToolbarTip from 'quill-toolbar-tip';
@@ -79,29 +79,44 @@ const quill = new Quill('#editor', {
 });
 ```
 
-You can set specify tip with `key:value`. For setting the tip text 'Unordered List' for a bullet list, you can use 'list: bullet': 'Unordered List'`
+## Configuration Structure
+
+For toolbar formats with multiple values (like pickers and dropdowns), you can use the `values` object to map each value to its tooltip text:
 
 ```ts
 const QuillToolbarTipOption = {
   tipTextMap: {
-    'list:ordered': 'Ordered List',
-    'list:bullet': 'Unordered List',
+    list: {
+      values: {
+        ordered: 'Ordered List',
+        bullet: 'Unordered List',
+      },
+    },
+    align: {
+      values: {
+        '': 'Left aligned',
+        center: 'Center aligned',
+        right: 'Right aligned',
+        justify: 'Justify aligned',
+      },
+    },
   }
 };
 ```
 
-You also can set an options for the key, and use the `onShow` to calculate the text of the tooltip. but you should use the `onShow` option, the `msg` / `content` or string value will be ignored. The final display text will be the item value.
+You can also use the `onShow` function to dynamically calculate the tooltip text. When both `values` and `onShow` are provided, `onShow` takes priority:
 
 ```ts
 const QuillToolbarTipOption = {
   tipTextMap: {
     script: {
+      values: {
+        sub: 'Subscript',
+        super: 'Superscript',
+      },
+      // onShow takes priority over values
       onShow(target, value) {
-        const text = {
-          sub: 'Subscript',
-          super: 'Superscript',
-        };
-        return text[value] || null;
+        return `Script: ${value}`;
       },
     },
   }

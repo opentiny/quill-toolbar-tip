@@ -5,7 +5,8 @@ import { tooltipDefaultOptions } from './constants';
 import { createTooltip, isString, isUndefined } from './utils';
 
 export interface TooltipItem extends Omit<TooltipOptions, 'onShow'> {
-  onShow: (this: Quill, target: HTMLElement, value: string) => ReturnType<TooltipOptions['onShow']>;
+  values?: Record<string, string>;
+  onShow?: (this: Quill, target: HTMLElement, value: string) => ReturnType<TooltipOptions['onShow']>;
 }
 
 export interface QuillToolbarTipOptions {
@@ -47,35 +48,42 @@ export class QuillToolbarTip {
   createToolbarTip() {
     for (const control of this.toolbar.controls) {
       const toolControlItem = control as [string, HTMLButtonElement | HTMLSelectElement];
-      let [toolName, toolControl] = toolControlItem;
-      const parentOptions = this.options.tipTextMap[toolName];
-      if (toolControl.value) {
-        toolName = `${toolName}:${toolControl.value}`;
+      const [toolName, toolControl] = toolControlItem;
+
+      let config = this.options.tipTextMap[toolName];
+      if (isUndefined(config)) continue;
+
+      // Convert string to object
+      if (isString(config)) {
+        config = { msg: config };
       }
-      let currentControlOption = this.options.tipTextMap[toolName];
-      if (isString(currentControlOption)) {
-        currentControlOption = {
-          msg: currentControlOption,
-        };
-      }
+
       const targetLabel = this.getControlLabel(toolControlItem);
-      if (!targetLabel || (isUndefined(currentControlOption) && isUndefined(parentOptions))) continue;
+      if (!targetLabel) continue;
+
+      // Create tooltip with new priority logic
       const instance = createTooltip(targetLabel, {
         ...this.options.defaultTooltipOptions,
-        ...currentControlOption,
+        ...config,
         onShow: (target: HTMLElement) => {
-          let result: ReturnType<TooltipItem['onShow']> = toolControl.value;
-          if (parentOptions && !isString(parentOptions) && parentOptions.onShow) {
-            result = parentOptions.onShow.call(this.quill, target, toolControl.value);
+          const currentValue = toolControl.value || '';
+
+          // Priority 1: onShow function
+          if (config.onShow) {
+            return config.onShow.call(this.quill, target, currentValue);
           }
-          let currentControlResult: ReturnType<TooltipItem['onShow']> = null;
-          if (currentControlOption) {
-            currentControlResult = currentControlOption.onShow ? currentControlOption.onShow.call(this.quill, target, toolControl.value) : currentControlOption.content || currentControlOption.msg;
+
+          // Priority 2: values mapping
+          if (config.values && currentValue in config.values) {
+            return config.values[currentValue];
           }
-          return currentControlResult || result;
+
+          // Priority 3: msg or content from config
+          return config.content || config.msg || null;
         },
         appendTo: this.quill.container,
       });
+
       if (instance) {
         this.toolbarTips.push([toolName, instance]);
       }
@@ -92,6 +100,7 @@ export class QuillToolbarTip {
     for (const [, item] of tips) {
       item.destroy();
     }
+    this.toolbarTips = [];
   }
 
   hideAllTips() {
