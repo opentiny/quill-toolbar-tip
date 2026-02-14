@@ -1,10 +1,10 @@
-# QuillToolbarTip
+# Quill Toolbar Tip
 
 [online demo](https://zzxming.github.io/quill-toolbar-tip/)
 
 ## Install
 
-```bash
+```sh
 npm install quill-toolbar-tip
 ```
 
@@ -115,7 +115,7 @@ const QuillToolbarTipOption = {
 | defaultTooltipOptions | `Partial<TooltipOptions>`                        | Default tooltip options.                                                                                                         |
 | tipTextMap            | `Record<string, Partial<TooltipItem> \| string>` | Tooltip text map. You can also set a object that will be use in the tooltip. The configuration of tooltip options is shown below |
 
-### TooltipOptions
+### Tooltip Options
 
 | Option       | Description                                                                                |
 | ------------ | ------------------------------------------------------------------------------------------ |
