@@ -82,7 +82,7 @@ export class QuillToolbarTip {
     }
   }
 
-  getControlLabel([_, target]: [ string, HTMLButtonElement | HTMLSelectElement]) {
+  getControlLabel([_, target]: [string, HTMLButtonElement | HTMLSelectElement]) {
     return target.tagName.toLowerCase() === 'button' ? target : target.previousElementSibling!.querySelector('.ql-picker-label') as HTMLElement | null;
   }
 

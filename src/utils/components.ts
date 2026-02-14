@@ -3,19 +3,19 @@ import { tooltipDefaultOptions } from '../constants';
 import { handleIfTransitionend } from './handler-utils';
 import { ensureArray, isString } from './types';
 
-export type Placement =
-  | 'top'
-  | 'top-start'
-  | 'top-end'
-  | 'bottom'
-  | 'bottom-start'
-  | 'bottom-end'
-  | 'right'
-  | 'right-start'
-  | 'right-end'
-  | 'left'
-  | 'left-start'
-  | 'left-end';
+export type Placement
+  = | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end';
 export interface TooltipOptions {
   direction: Placement;
   msg: string;
@@ -33,7 +33,7 @@ export interface TooltipInstance {
   show: () => void;
 }
 let tooltipContainer: HTMLElement | undefined;
-export const createTooltip = (target: HTMLElement, options: Partial<TooltipOptions> = {}): TooltipInstance | null => {
+export function createTooltip(target: HTMLElement, options: Partial<TooltipOptions> = {}): TooltipInstance | null {
   let {
     msg = '',
     delay = 150,
@@ -158,4 +158,4 @@ export const createTooltip = (target: HTMLElement, options: Partial<TooltipOptio
     };
   }
   return null;
-};
+}
