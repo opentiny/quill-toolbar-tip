@@ -3,12 +3,10 @@ import type { QuillToolbarTipOptions, TooltipItem } from '..';
 export const defaultToolbarTip: Record<string, QuillToolbarTipOptions['tipTextMap']> = {
   'en-US': {
     ...[
-      'background',
       'blockquote',
       'bold',
       'clean',
       'code',
-      'color',
       'formula',
       'italic',
       'image',
@@ -57,6 +55,16 @@ export const defaultToolbarTip: Record<string, QuillToolbarTipOptions['tipTextMa
     'direction': {
       onShow(target) {
         return target.classList.contains('ql-active') ? 'Text Direction Right To Left' : 'Text Direction Left To Right';
+      },
+    },
+    'color': {
+      onShow(target, value) {
+        return value || 'color';
+      },
+    },
+    'background': {
+      onShow(target, value) {
+        return value || 'background';
       },
     },
   },
