@@ -92,6 +92,7 @@ export class QuillToolbarTip {
     for (const [, item] of tips) {
       item.destroy();
     }
+    this.toolbarTips = [];
   }
 
   hideAllTips() {
