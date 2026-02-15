@@ -114,3 +114,4 @@ export class QuillToolbarTip {
 
 export default QuillToolbarTip;
 export { defaultToolbarTip } from './constants';
+export * from './supports';
