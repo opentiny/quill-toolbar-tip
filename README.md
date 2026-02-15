@@ -1,6 +1,6 @@
 # Quill Toolbar Tip
 
-[online demo](https://zzxming.github.io/quill-toolbar-tip/)
+[online demo](https://opentiny.github.io/quill-toolbar-tip/)
 
 ## Install
 
@@ -95,9 +95,9 @@ const QuillToolbarTipOption = {
     align: {
       values: {
         '': 'Left aligned',
-        center: 'Center aligned',
-        right: 'Right aligned',
-        justify: 'Justify aligned',
+        'center': 'Center aligned',
+        'right': 'Right aligned',
+        'justify': 'Justify aligned',
       },
     },
   }
