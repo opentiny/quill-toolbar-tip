@@ -66,7 +66,14 @@ export class QuillToolbarTip {
         ...this.options.defaultTooltipOptions,
         ...config,
         onShow: (target: HTMLElement) => {
-          const currentValue = toolControl.value || '';
+          let currentValue = toolControl.value || '';
+          if (toolControl.tagName.toLowerCase() === 'select') {
+            // When an <option> has no `value` attribute, `select.value` falls back to the
+            // option's text content. To avoid this, read the `value` attribute directly
+            // from the selected option element, which returns null (not the text) when absent.
+            const selectTool = toolControl as HTMLSelectElement;
+            currentValue = selectTool.options[selectTool.selectedIndex]?.getAttribute?.('value') || '';
+          }
 
           // Priority 1: onShow function
           if (config.onShow) {
