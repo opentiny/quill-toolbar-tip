@@ -6,7 +6,7 @@ import { createTooltip, isString, isUndefined } from './utils';
 
 export interface TooltipItem extends Omit<TooltipOptions, 'onShow'> {
   values?: Record<string, string>;
-  onShow?: (this: Quill, target: HTMLElement, value: string) => ReturnType<TooltipOptions['onShow']>;
+  onShow?: (this: Quill, target: HTMLElement, value: string, toolControl: HTMLButtonElement | HTMLSelectElement) => ReturnType<TooltipOptions['onShow']>;
 }
 
 export interface QuillToolbarTipOptions {
@@ -70,7 +70,7 @@ export class QuillToolbarTip {
 
           // Priority 1: onShow function
           if (config.onShow) {
-            return config.onShow.call(this.quill, target, currentValue);
+            return config.onShow.call(this.quill, target, currentValue, toolControl);
           }
 
           // Priority 2: values mapping
