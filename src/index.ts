@@ -6,7 +6,7 @@ import { createTooltip, isString, isUndefined } from './utils';
 
 export interface TooltipItem extends Omit<TooltipOptions, 'onShow'> {
   values?: Record<string, string>;
-  onShow?: (this: Quill, target: HTMLElement, value: string) => ReturnType<TooltipOptions['onShow']>;
+  onShow?: (this: Quill, target: HTMLElement, value: string, toolControl: HTMLButtonElement | HTMLSelectElement) => ReturnType<TooltipOptions['onShow']>;
 }
 
 export interface QuillToolbarTipOptions {
@@ -66,11 +66,18 @@ export class QuillToolbarTip {
         ...this.options.defaultTooltipOptions,
         ...config,
         onShow: (target: HTMLElement) => {
-          const currentValue = toolControl.value || '';
+          let currentValue = toolControl.value || '';
+          if (toolControl.tagName.toLowerCase() === 'select') {
+            // When an <option> has no `value` attribute, `select.value` falls back to the
+            // option's text content. To avoid this, read the `value` attribute directly
+            // from the selected option element, which returns null (not the text) when absent.
+            const selectTool = toolControl as HTMLSelectElement;
+            currentValue = selectTool.options[selectTool.selectedIndex]?.getAttribute?.('value') || '';
+          }
 
           // Priority 1: onShow function
           if (config.onShow) {
-            return config.onShow.call(this.quill, target, currentValue);
+            return config.onShow.call(this.quill, target, currentValue, toolControl);
           }
 
           // Priority 2: values mapping
